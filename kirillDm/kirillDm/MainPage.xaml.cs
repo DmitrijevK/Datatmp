@@ -11,9 +11,10 @@ namespace kirillDm
 {
     public partial class MainPage : ContentPage
     {
-        Picker puker, puker1;
+        Picker puker;
         Image bok1;
         Editor Edit;
+        Entry buka;
         public MainPage()
         {
             Grid abs = new Grid {
@@ -32,6 +33,7 @@ namespace kirillDm
 
                 }
 
+                
             };
 
 
@@ -47,12 +49,13 @@ namespace kirillDm
             puker.Items.Add("Тарту");
             puker.SelectedIndexChanged += Puker_SelectedIndexChanged;
 
-            DatePicker datePicker = new DatePicker
-            {
-                MinimumDate = new DateTime(2020, 11, 1),
-                MaximumDate = new DateTime(2020, 11, 30),
-                Date = new DateTime(2020, 11, 1)
-            };
+            //   DatePicker datePicker = new DatePicker
+            //   {
+            //  Format = "M",
+            //  MinimumDate = DateTime.Now,
+            //   MaximumDate = DateTime.Now.AddDays(+20)
+            //   };
+            //   datePicker.DateSelected += DatePicker_DateSelected;
 
 
             Edit = new Editor { Placeholder = "Задать вопрос" };
@@ -60,9 +63,27 @@ namespace kirillDm
       
             abs.Children.Add(puker, 0,1);
 
-            abs.Children.Add(datePicker, 0, 2);
+            // abs.Children.Add(datePicker, 0, 2);
+
+            TimePicker tp = new TimePicker()
+            {
+                Time=new TimeSpan(Now)
+            };
+            abs.Children.Add(tp, 0, 3);
+
+            Entry buka = new Entry
+            {
+                Text = "Своя дата"
+            };
+            abs.Children.Add(buka, 0, 4);
 
             Content = abs;
+        }
+
+       
+        private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            buka.Text = "Своя дата " + e.NewDate.ToString("M");
         }
 
         private void Puker_SelectedIndexChanged(object sender, EventArgs e)
